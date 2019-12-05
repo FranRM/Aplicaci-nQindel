@@ -5,7 +5,7 @@
  */
 package sql;
 
-import com.mysql.jdbc.Connection;
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -16,8 +16,8 @@ import java.sql.Statement;
  */
 public class CreadorEsquema {
     
-    public static java.sql.Connection conexion() {
-        java.sql.Connection c = null;
+    public static Connection conexion() {
+        Connection c = null;
         try {
             c = DriverManager.getConnection("jdbc:mysql://localhost:3306/?user=root");
             System.out.println("Conexion realizada satisfactoriamente.");
@@ -28,7 +28,7 @@ public class CreadorEsquema {
         return c;
     }
 
-    public static void creaTaboas(java.sql.Connection c) {
+    public static void creaTaboas(Connection c) {
         try {
             Statement creacion = c.createStatement();
             creacion.execute("drop database if exists juegosolimpicos;");
