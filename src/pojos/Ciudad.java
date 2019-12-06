@@ -13,33 +13,33 @@ import java.util.logging.Logger;
  * @author Femio
  */
 public class Ciudad implements Serializable{
-    private int id_ciudad,valor_ciudad;
+    private Integer id_ciudad,valor_ciudad;
     private Pais id_pais;
     private String nombre_ciudad;
 
     public Ciudad() {
     }
 
-    public Ciudad(int id_ciudad, int valor_ciudad, Pais id_pais, String nombre_ciudad) {
+    public Ciudad(Integer id_ciudad, Integer valor_ciudad, Pais id_pais, String nombre_ciudad) {
         this.id_ciudad = id_ciudad;
         this.valor_ciudad = valor_ciudad;
         this.id_pais = id_pais;
         this.nombre_ciudad = nombre_ciudad;
     }
 
-    public int getId_ciudad() {
+    public Integer getId_ciudad() {
         return id_ciudad;
     }
 
-    public void setId_ciudad(int id_ciudad) {
+    public void setId_ciudad(Integer id_ciudad) {
         this.id_ciudad = id_ciudad;
     }
 
-    public int getValor_ciudad() {
+    public Integer getValor_ciudad() {
         return valor_ciudad;
     }
 
-    public void setValor_ciudad(int valor_ciudad) {
+    public void setValor_ciudad(Integer valor_ciudad) {
         this.valor_ciudad = valor_ciudad;
     }
 

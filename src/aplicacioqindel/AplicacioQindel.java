@@ -7,6 +7,7 @@ package aplicacioqindel;
 
 import java.sql.Connection;
 import org.hibernate.Session;
+import sql.Consultas;
 import sql.CreadorEsquema;
 
 /**
@@ -18,9 +19,14 @@ public class AplicacioQindel {
     /**
      * @param args the command line arguments
      */
+    public static Consultas q;
+    static FramePrincipal frame=null;
     public static void main(String[] args) {
+        frame = new FramePrincipal();
+        frame.setVisible(true);
         Session sesion = NewHibernateUtil.getSession();
         Connection c = CreadorEsquema.conexion();
+        q = new Consultas(sesion);
+        q.consultaAmplia();
     }
-    
 }

@@ -45,6 +45,6 @@ Contributor(s):
             <key-property name="año"/>
             <key-many-to-one name="id_tipo_JJOO" class="pojos.Tipo_JJOO" column="id_tipo_JJOO"/>
         </composite-id>
-        <one-to-one name="sede" cascade="all" />
+        <one-to-one name="sede" class="pojos.Sede_JJOO" cascade="all" />
     </class>
 </hibernate-mapping>
