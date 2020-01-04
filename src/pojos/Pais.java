@@ -11,9 +11,10 @@ import java.io.Serializable;
  *
  * @author Femio
  */
-public class Pais implements Serializable{
-    private String nombre_pais,codigo_pais;
-    private int id_pais,valor_pais;
+public class Pais implements Serializable {
+
+    private String nombre_pais, codigo_pais;
+    private int id_pais, valor_pais;
 
     public Pais() {
     }
@@ -56,5 +57,5 @@ public class Pais implements Serializable{
     public void setValor_pais(int valor_pais) {
         this.valor_pais = valor_pais;
     }
-    
+
 }

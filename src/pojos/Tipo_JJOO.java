@@ -11,14 +11,15 @@ import java.io.Serializable;
  *
  * @author Femio
  */
-public class Tipo_JJOO implements Serializable{
+public class Tipo_JJOO implements Serializable {
+
     private String descripcion_tipo;
     private int id_tipo_JJOO;
 
     public Tipo_JJOO() {
     }
 
-    public Tipo_JJOO(String descripcion_tipo, int id_tipo_JJOO) {
+    public Tipo_JJOO( int id_tipo_JJOO, String descripcion_tipo) {
         this.descripcion_tipo = descripcion_tipo;
         this.id_tipo_JJOO = id_tipo_JJOO;
     }
@@ -38,5 +39,5 @@ public class Tipo_JJOO implements Serializable{
     public void setId_tipo_JJOO(int id_tipo_JJOO) {
         this.id_tipo_JJOO = id_tipo_JJOO;
     }
-    
+
 }

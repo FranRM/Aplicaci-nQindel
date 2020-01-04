@@ -15,7 +15,7 @@ import java.sql.Statement;
  * @author Femio
  */
 public class CreadorEsquema {
-    
+
     public static Connection conexion() {
         Connection c = null;
         try {
@@ -50,7 +50,7 @@ public class CreadorEsquema {
                     + "key fk_ciudad_pais(id_pais),"
                     + "constraint fk_ciudad_pais "
                     + "foreign key (id_pais) references Pais(id_pais) "
-                    + "on update cascade on delete cascade" 
+                    + "on update cascade on delete cascade"
                     + ");");
             creacion.execute("create table if not exists Tipo_JJOO("
                     + "id_tipo_JJOO int(11) NOT NULL,"

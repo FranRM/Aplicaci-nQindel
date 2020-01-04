@@ -11,7 +11,8 @@ import java.io.Serializable;
  *
  * @author Femio
  */
-public class Sede_JJOO implements Serializable{
+public class Sede_JJOO implements Serializable {
+
     private int año;
     private Ciudad sede;
     private Tipo_JJOO id_tipo_JJOO;
@@ -48,5 +49,5 @@ public class Sede_JJOO implements Serializable{
     public void setId_tipo_JJOO(Tipo_JJOO id_tipo_JJOO) {
         this.id_tipo_JJOO = id_tipo_JJOO;
     }
-    
+
 }

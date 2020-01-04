@@ -20,13 +20,14 @@ public class AplicacioQindel {
      * @param args the command line arguments
      */
     public static Consultas q;
-    static FramePrincipal frame=null;
+    static FramePrincipal frame = null;
+
     public static void main(String[] args) {
-        frame = new FramePrincipal();
-        frame.setVisible(true);
         Session sesion = NewHibernateUtil.getSession();
         Connection c = CreadorEsquema.conexion();
         q = new Consultas(sesion);
-        q.consultaAmplia();
+        q.consultaSedes();
+        frame = new FramePrincipal();
+        frame.setVisible(true);
     }
 }

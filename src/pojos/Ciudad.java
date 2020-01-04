@@ -6,7 +6,6 @@
 package pojos;
 
 import java.io.Serializable;
-import java.util.logging.Logger;
 
 /**
  *
