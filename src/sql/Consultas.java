@@ -68,7 +68,7 @@ public class Consultas {
     }
 
     public static List<Sede_JJOO> consultaSedes() {
-        List<Sede_JJOO> sedes = s.createSQLQuery("SELECT * FROM Sede_JJOO where año=1992").list();
+        List<Sede_JJOO> sedes = s.createCriteria(Sede_JJOO.class).list();
         for (Sede_JJOO sed : sedes) {
             System.out.println(sed.toString());
         }
