@@ -15,7 +15,7 @@ import java.sql.Statement;
  * @author Femio
  */
 public class CreadorEsquema {
-
+    
     public static Connection conexion() {
         Connection c = null;
         try {
@@ -50,7 +50,7 @@ public class CreadorEsquema {
                     + "key fk_ciudad_pais(id_pais),"
                     + "constraint fk_ciudad_pais "
                     + "foreign key (id_pais) references Pais(id_pais) "
-                    + "on update cascade on delete cascade"
+                    + "on update cascade on delete cascade" 
                     + ");");
             creacion.execute("create table if not exists Tipo_JJOO("
                     + "id_tipo_JJOO int(11) NOT NULL,"
@@ -82,7 +82,7 @@ public class CreadorEsquema {
                     + "(10,\"Milán\",4,135),(11,\"Roma\",4,125),(12,\"Turín\",4,190);");
             creacion.execute("insert into Tipo_JJOO values(1,\"Invierno\"),(2,\"Verano\");");
             creacion.execute("insert into Sede_JJOO values(1992,2,3),(1924,1,7),(1900,2,8),(1924,2,8),(1960,2,11),(2006,1,12);");
-            System.out.println("Carga de datos realizada correctamente");
+            System.out.println("Carga de datos realizada correctamente.");
         } catch (SQLException sqle) {
             System.out.println(sqle.getMessage());
         }

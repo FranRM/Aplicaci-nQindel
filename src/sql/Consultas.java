@@ -6,6 +6,7 @@
 package sql;
 
 import java.util.List;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import pojos.Ciudad;
 import pojos.Pais;
@@ -29,8 +30,6 @@ public class Consultas {
         return s;
     }
 
-    ;
-    
     public static void consultaAmplia() {
         List<Object[]> ciudades = s.createSQLQuery("SELECT * FROM Ciudad").list();
         for (Object[] objects : ciudades) {
@@ -68,11 +67,16 @@ public class Consultas {
     }
 
     public static List<Sede_JJOO> consultaSedes() {
-        List<Sede_JJOO> sedes = s.createCriteria(Sede_JJOO.class).list();
-        for (Sede_JJOO sed : sedes) {
-            System.out.println(sed.toString());
+        List<Sede_JJOO> sedes;
+        try{
+            sedes = s.createCriteria(Sede_JJOO.class).list();
+            return sedes;
+        } catch (HibernateException excepcion) {
+            System.err.println("Error al extraer las consultas");
+            System.out.println(excepcion.getMessage());
+            return null;
         }
-        return sedes;
+        
     }
 
     public static List<Ciudad> consultaCiudades() {

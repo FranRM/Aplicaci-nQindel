@@ -26,7 +26,6 @@ public class AplicacioQindel {
         Session sesion = NewHibernateUtil.getSession();
         Connection c = CreadorEsquema.conexion();
         q = new Consultas(sesion);
-        q.consultaSedes();
         frame = new FramePrincipal();
         frame.setVisible(true);
     }

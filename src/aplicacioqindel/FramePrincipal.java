@@ -5,15 +5,15 @@
  */
 package aplicacioqindel;
 
-import aplicacioqindel.AplicacioQindel;
 import static aplicacioqindel.FramePrincipal.sedes;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
-import org.hibernate.Session;
+import org.hibernate.HibernateException;
 import pojos.Ciudad;
 import pojos.Sede_JJOO;
 import pojos.Tipo_JJOO;
+import sql.CRUD;
 import sql.Consultas;
 
 /**
@@ -22,6 +22,7 @@ import sql.Consultas;
  */
 public class FramePrincipal extends javax.swing.JFrame {
 
+    static Sede_JJOO sedeSeleccionada;
     static List<Sede_JJOO> sedes;
     static List<Ciudad> ciudades;
     static List<Tipo_JJOO> tipos;
@@ -31,10 +32,17 @@ public class FramePrincipal extends javax.swing.JFrame {
      */
     public FramePrincipal() {
         initComponents();
-        jList1.removeAll();
-        //jList1.setModel(modelList());
-        jComboBox2.setModel(modelList2());
+        jList1.setModel(modelList());
+        jComboBox1.setSelectedIndex(-1);
+        jComboBox2.setSelectedIndex(-1);
+        sedeSeleccionada = null;
         jComboBox1.setModel(modelList1());
+        jComboBox2.setModel(modelList2());
+        jComboBox1.setSelectedIndex(-1);
+        jComboBox2.setSelectedIndex(-1);
+        jButton3.setEnabled(true);
+        jButton4.setEnabled(false);
+        jButton5.setEnabled(false);
     }
 
     /**
@@ -60,6 +68,10 @@ public class FramePrincipal extends javax.swing.JFrame {
         jTextField1 = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
         jComboBox2 = new javax.swing.JComboBox<>();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -81,15 +93,18 @@ public class FramePrincipal extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
-                .addContainerGap(159, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1))
         );
 
@@ -108,11 +123,37 @@ public class FramePrincipal extends javax.swing.JFrame {
 
         jLabel3.setText("Sede");
 
-        jTextField1.setText("jTextField1");
-
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/baseline_autorenew_black_18dp.png"))); // NOI18N
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refrescador(evt);
+            }
+        });
+
+        jButton3.setText("Crear");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("Editar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton5.setText("Borrar");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
             }
         });
 
@@ -121,29 +162,45 @@ public class FramePrincipal extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15))
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(48, 48, 48)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel2))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jComboBox2, 0, 115, Short.MAX_VALUE)
+                                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jButton3)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton4)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jButton5)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jButton2)
+                .addGap(5, 5, 5)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
+                        .addGap(10, 10, 10)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -154,8 +211,14 @@ public class FramePrincipal extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(90, Short.MAX_VALUE))
+                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton3)
+                            .addComponent(jButton4))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton5)
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         jTabbedPane2.addTab("Exercicion 5", jPanel2);
@@ -181,16 +244,66 @@ public class FramePrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lanzarConsulta(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lanzarConsulta
+        Consultas.consultaAmplia();
         salidaDatos.setText(Consultas.saida);
     }//GEN-LAST:event_lanzarConsulta
 
     private void selectorLista(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_selectorLista
-        System.out.println(jList1.getSelectedIndex());
+        sedeSeleccionada = sedes.get(jList1.getSelectedIndex());
+        jComboBox1.setSelectedIndex(tipos.indexOf(sedeSeleccionada.getId_tipo_JJOO()));
+        jComboBox2.setSelectedIndex(ciudades.indexOf(sedeSeleccionada.getSede()));
+        jTextField1.setText(Integer.toString(sedeSeleccionada.getAño()));
+        jButton3.setEnabled(false);
+        jButton4.setEnabled(true);
+        jButton5.setEnabled(true);
     }//GEN-LAST:event_selectorLista
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void refrescador(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refrescador
+        refrescar();
+    }//GEN-LAST:event_refrescador
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+
+        try {
+            if (jComboBox1.getSelectedIndex() == (-1) || jComboBox2.getSelectedIndex() == (-1) || jTextField1.getText().equalsIgnoreCase("")) {
+                System.out.println("Campos sin completar.");
+            } else {
+                Sede_JJOO novaSede = new Sede_JJOO(Integer.getInteger(jTextField1.getText()), ciudades.get(jComboBox2.getSelectedIndex()),
+                        tipos.get(jComboBox1.getSelectedIndex()));
+                System.out.println(novaSede.getSede().getNombre_ciudad() + " foi creada.");
+                CRUD.alta(novaSede);
+            }
+        } catch (HibernateException excepcion) {
+            System.err.println("Error");
+            System.out.println(excepcion.getMessage());
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        try {
+            Sede_JJOO novaSede = new Sede_JJOO(Integer.getInteger(jTextField1.getText()), ciudades.get(jComboBox2.getSelectedIndex()),
+                    tipos.get(jComboBox1.getSelectedIndex()));
+            System.out.println(novaSede.getSede().getNombre_ciudad() + " foi editada.");
+            CRUD.modificacion(novaSede);
+        } catch (HibernateException excepcion) {
+            System.err.println("Error");
+            System.out.println(excepcion.getMessage());
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        try {
+            
+            CRUD.borrado(sedeSeleccionada);
+        } catch (HibernateException excepcion) {
+            System.err.println("Error al extraer las consultas");
+            System.out.println(excepcion.getMessage());
+        }
+
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -229,6 +342,10 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
@@ -246,7 +363,7 @@ public class FramePrincipal extends javax.swing.JFrame {
 
     static private DefaultListModel modelList() {
         DefaultListModel model = new DefaultListModel<>();
-        //sedes = Consultas.consultaSedes();
+        sedes = Consultas.consultaSedes();
         for (Sede_JJOO iterador : sedes) {
             model.addElement(iterador.getSede().getNombre_ciudad());
         }
@@ -269,5 +386,17 @@ public class FramePrincipal extends javax.swing.JFrame {
             model.addElement(iterador.getDescripcion_tipo());
         }
         return model;
+    }
+
+    public void refrescar() {
+        jTextField1.setText("");
+        jComboBox1.setSelectedIndex(-1);
+        jComboBox2.setSelectedIndex(-1);
+        sedeSeleccionada = null;
+        jButton3.setEnabled(true);
+        jButton4.setEnabled(false);
+        jButton5.setEnabled(false);
+        jList1.setModel(modelList());
+
     }
 }
