@@ -9,6 +9,7 @@ import static aplicacioqindel.FramePrincipal.sedes;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.event.ListSelectionListener;
 import org.hibernate.HibernateException;
 import pojos.Ciudad;
 import pojos.Sede_JJOO;
@@ -122,12 +123,6 @@ public class FramePrincipal extends javax.swing.JFrame {
         jLabel2.setText("Tipo de JJOO");
 
         jLabel3.setText("Sede");
-
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
-            }
-        });
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/baseline_autorenew_black_18dp.png"))); // NOI18N
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -258,20 +253,16 @@ public class FramePrincipal extends javax.swing.JFrame {
         jButton5.setEnabled(true);
     }//GEN-LAST:event_selectorLista
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
-
     private void refrescador(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refrescador
         refrescar();
     }//GEN-LAST:event_refrescador
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-
+        Sede_JJOO novaSede;
         try {
             if (jComboBox1.getSelectedIndex() == (-1) || jComboBox2.getSelectedIndex() == (-1) || jTextField1.getText().equalsIgnoreCase("")) {
                 System.out.println("Campos sin completar.");
             } else {
-                Sede_JJOO novaSede = new Sede_JJOO(Integer.getInteger(jTextField1.getText()), ciudades.get(jComboBox2.getSelectedIndex()),
+                novaSede = new Sede_JJOO(Integer.parseInt(jTextField1.getText()), ciudades.get(jComboBox2.getSelectedIndex()),
                         tipos.get(jComboBox1.getSelectedIndex()));
                 System.out.println(novaSede.getSede().getNombre_ciudad() + " foi creada.");
                 CRUD.alta(novaSede);
@@ -280,18 +271,21 @@ public class FramePrincipal extends javax.swing.JFrame {
             System.err.println("Error");
             System.out.println(excepcion.getMessage());
         }
+        refrescar();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         try {
-            Sede_JJOO novaSede = new Sede_JJOO(Integer.getInteger(jTextField1.getText()), ciudades.get(jComboBox2.getSelectedIndex()),
-                    tipos.get(jComboBox1.getSelectedIndex()));
-            System.out.println(novaSede.getSede().getNombre_ciudad() + " foi editada.");
-            CRUD.modificacion(novaSede);
+            sedeSeleccionada.setAño(Integer.parseInt(jTextField1.getText()));
+            sedeSeleccionada.setId_tipo_JJOO(tipos.get(jComboBox1.getSelectedIndex()));
+            sedeSeleccionada.setSede(ciudades.get(jComboBox2.getSelectedIndex()));
+            System.out.println(sedeSeleccionada.getSede().getNombre_ciudad() + " foi editada.");
+            CRUD.modificacion(sedeSeleccionada);
         } catch (HibernateException excepcion) {
             System.err.println("Error");
             System.out.println(excepcion.getMessage());
         }
+        refrescar();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -302,6 +296,7 @@ public class FramePrincipal extends javax.swing.JFrame {
             System.err.println("Error al extraer las consultas");
             System.out.println(excepcion.getMessage());
         }
+        refrescar();
 
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -392,11 +387,11 @@ public class FramePrincipal extends javax.swing.JFrame {
         jTextField1.setText("");
         jComboBox1.setSelectedIndex(-1);
         jComboBox2.setSelectedIndex(-1);
-        sedeSeleccionada = null;
         jButton3.setEnabled(true);
         jButton4.setEnabled(false);
         jButton5.setEnabled(false);
         jList1.setModel(modelList());
-
+        jList1.setSelectedIndex(-1);
+        sedeSeleccionada = null;
     }
 }

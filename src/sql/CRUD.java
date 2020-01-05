@@ -33,7 +33,9 @@ public class CRUD {
     public static void borrado(Sede_JJOO sede) {
         Session s = NewHibernateUtil.getSession();
         System.out.println(sede.getSede().getNombre_ciudad()+" foi eliminada.");
+        s.beginTransaction();
         s.delete(sede);
+        s.getTransaction().commit();
         s.close();
     }
 
